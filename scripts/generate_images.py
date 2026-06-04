@@ -11,7 +11,7 @@ def generate_images(model_path='generator_epoch_20.pth', num_images=16):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
     # Load model
-    generator = DiTGenerator(img_size=128, hidden_size=128, num_layers=3, latent_dim=256).to(device)
+    generator = DiTGenerator(img_size=256, hidden_size=256, num_layers=6, latent_dim=512).to(device)
     generator.load_state_dict(torch.load(f'../outputs/{model_path}', map_location=device))
     generator.eval()
     
@@ -38,11 +38,11 @@ def generate_images(model_path='generator_epoch_20.pth', num_images=16):
                 idx = i * cols + j
                 if idx < num_images:
                     img = fake_images[idx].cpu().permute(1, 2, 0).numpy()
-                    axes[i][j].imshow(np.clip(img, 0, 1))
+                    axes[i][j].imshow(np.clip(img, 0, 1), interpolation='lanczos')
                 axes[i][j].axis('off')
         
         plt.tight_layout()
-        plt.savefig('../outputs/final_generated_images.png', dpi=150, bbox_inches='tight')
+        plt.savefig('../outputs/final_generated_images.png', dpi=300, bbox_inches='tight')
         plt.show()
         
         print(f"Generated {num_images} images saved as 'final_generated_images.png'")
