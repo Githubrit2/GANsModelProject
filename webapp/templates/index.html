@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎭 AI Face Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎭 AI Face Generator</h1>
+            <p class="subtitle">Generate unique faces that don't exist!</p>
+        </header>
+
+        <div class="status" id="status">✅ AI Model loaded successfully!</div>
+
+        <main>
+            <div class="input-section">
+                <h2>🎨 Generate Your Face</h2>
+                <input type="text" id="textInput" placeholder="e.g., young woman with brown hair" />
+                <button id="generateBtn" onclick="generateFace()">🎲 Generate Face</button>
+                
+                <div class="tips">
+                    <h3>💡 Tips:</h3>
+                    <ul>
+                        <li>Try different descriptions</li>
+                        <li>Same text = same face</li>
+                        <li>Be creative with inputs!</li>
+                    </ul>
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>"happy person"</li>
+                        <li>"professional look"</li>
+                        <li>"artistic style"</li>
+                        <li>"vintage portrait"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="result-section" id="resultSection" style="display: none;">
+                <h2>🖼️ Generated Result</h2>
+                <img id="generatedImage" alt="Generated Face" />
+                
+                <div class="info">
+                    <h3>📊 Generation Info:</h3>
+                    <p><strong>Input:</strong> <span id="inputText"></span></p>
+                    <p><strong>Seed:</strong> <span id="seedValue"></span></p>
+                    <p><strong>Status:</strong> ✅ Generated successfully</p>
+                    
+                    <h3>🔬 Technical Details:</h3>
+                    <ul>
+                        <li>Model: Simple GAN (2025)</li>
+                        <li>Resolution: 128x128</li>
+                        <li>This person doesn't exist!</li>
+                    </ul>
+                    
+                    <button id="downloadBtn" onclick="downloadImage()">💾 Download Image</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p><strong>Fake Image Generation using GANs</strong></p>
+            <p>Powered by Simple Convolutional GAN (2025 Architecture)</p>
+        </footer>
+    </div>
+
+    <div id="loader" style="display: none;">
+        <div class="spinner"></div>
+        <p>Generating your unique face...</p>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
