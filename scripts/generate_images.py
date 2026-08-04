@@ -1,8 +1,10 @@
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 import sys
-sys.path.append('..')
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)
 from models.dit_gan import DiTGenerator
 
 def generate_images(model_path='generator_epoch_20.pth', num_images=16):
@@ -11,8 +13,11 @@ def generate_images(model_path='generator_epoch_20.pth', num_images=16):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
     # Load model
-    generator = DiTGenerator(img_size=256, hidden_size=256, num_layers=6, latent_dim=512).to(device)
-    generator.load_state_dict(torch.load(f'../outputs/{model_path}', map_location=device))
+    generator = DiTGenerator(img_size=128, hidden_size=128, num_layers=3, latent_dim=256).to(device)
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    model_file = os.path.join(project_root, "outputs", model_path)
+
+    generator.load_state_dict(torch.load(model_file, map_location=device))
     generator.eval()
     
     # Generate images
@@ -42,10 +47,14 @@ def generate_images(model_path='generator_epoch_20.pth', num_images=16):
                 axes[i][j].axis('off')
         
         plt.tight_layout()
-        plt.savefig('../outputs/final_generated_images.png', dpi=300, bbox_inches='tight')
-        plt.show()
-        
-        print(f"Generated {num_images} images saved as 'final_generated_images.png'")
+        output_dir = os.path.join(project_root, "outputs")
+        os.makedirs(output_dir, exist_ok=True)
 
+        output_file = os.path.join(output_dir, "final_generated_images.png")
+
+        plt.savefig(output_file, dpi=300, bbox_inches='tight')
+        plt.show()
+
+        print(f"Generated {num_images} images saved to: {output_file}")
 if __name__ == "__main__":
     generate_images()

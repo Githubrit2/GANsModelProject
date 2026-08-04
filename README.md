@@ -73,7 +73,7 @@ python generate_images.py
 
 ### Web App
 ```bash
-cd webapp
-python flask_app.py
+python webapp\flask_app.py
 ```
 
+============
